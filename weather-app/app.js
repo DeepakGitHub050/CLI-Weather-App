@@ -35,7 +35,8 @@ yargs.command({
 
 const getWeather = (url) => {
   request({ url: url, json: true }, (error, response) => {
-    const data = response.body;
+    console.log(error);
+    /*const data = response.body;
     const country = data.sys.country,
       city = data.name,
       temperature = data.main.temp,
@@ -57,7 +58,7 @@ const getWeather = (url) => {
         "% Visibility: " +
         visibility +
         "km"
-    );
+    );*/
   });
 };
 
