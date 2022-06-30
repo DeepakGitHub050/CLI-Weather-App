@@ -1,4 +1,5 @@
 const request = require("request");
+const { argv } = require("yargs");
 
 const yargs = require("yargs");
 //debugger;
@@ -34,10 +35,14 @@ yargs.command({
 });
 
 const getWeather = (url) => {
+  const c_code = argv.country.toUpperCase().slice(0, 2);
   request({ url: url, json: true }, (error, response) => {
     if (error) {
       console.log("Unable to connect to Weather server");
-    } else if (response.body.error) {
+    } else if (
+      response.body.name == undefined ||
+      response.body.sys.country !== c_code
+    ) {
       console.log("Unable to Find location");
     } else {
       const data = response.body;
