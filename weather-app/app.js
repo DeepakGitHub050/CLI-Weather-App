@@ -36,16 +36,16 @@ yargs.command({
 const getWeather = (url) => {
   request({ url: url, json: true }, (error, response) => {
     if (error) {
-      console.log("Unable to connect to weather service");
+      console.log("Unable to connect to Weather server");
     } else if (response.body.error) {
-      console.log("Unable to find location");
+      console.log("Unable to Find location");
     } else {
       const data = response.body;
-      const country = data.country,
+      const country = data.sys.country,
         city = data.name,
-        temperature = data.temp,
-        pressure = data.pressure,
-        humidity = data.humidity,
+        temperature = data.main.temp,
+        pressure = data.main.pressure,
+        humidity = data.main.humidity,
         visibility = data.visibility;
       //console.log(data.main);
       console.log(
