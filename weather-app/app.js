@@ -3,7 +3,7 @@ const request = require("request");
 const yargs = require("yargs");
 
 yargs.command({
-  command: "location",
+  command: "Temperature",
   describe: "Enter location",
   builder: {
     city: {
