@@ -35,30 +35,35 @@ yargs.command({
 
 const getWeather = (url) => {
   request({ url: url, json: true }, (error, response) => {
-    console.log(error);
-    /*const data = response.body;
-    const country = data.sys.country,
-      city = data.name,
-      temperature = data.main.temp,
-      pressure = data.main.pressure,
-      humidity = data.main.humidity,
-      visibility = data.visibility;
-    //console.log(data.main);
-    console.log(
-      "Country: " +
-        country +
-        " city: " +
-        city +
-        " Temperature: " +
-        temperature +
-        "℃  Pressure: " +
-        pressure +
-        "mbar Humidity: " +
-        humidity +
-        "% Visibility: " +
-        visibility +
-        "km"
-    );*/
+    if (error) {
+      console.log("Unable to connect to weather service");
+    } else if (response.body.error) {
+      console.log("Unable to find location");
+    } else {
+      const data = response.body;
+      const country = data.country,
+        city = data.name,
+        temperature = data.temp,
+        pressure = data.pressure,
+        humidity = data.humidity,
+        visibility = data.visibility;
+      //console.log(data.main);
+      console.log(
+        "Country: " +
+          country +
+          " city: " +
+          city +
+          " Temperature: " +
+          temperature +
+          "℃  Pressure: " +
+          pressure +
+          "mbar Humidity: " +
+          humidity +
+          "% Visibility: " +
+          visibility +
+          "km"
+      );
+    }
   });
 };
 
