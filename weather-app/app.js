@@ -26,9 +26,9 @@ yargs.command({
   handler(argv) {
     const url =
       "https://api.openweathermap.org/data/2.5/weather?q=" +
-      argv.city +
+      encodeURIComponent(argv.city) +
       "," +
-      argv.country +
+      encodeURIComponent(argv.country) +
       "&APPID=62b4ca8c3ab560e2742636ac825805d5&units=metric";
     getWeather(url);
   },
