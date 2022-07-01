@@ -30,20 +30,23 @@ yargs.command({
       "," +
       encodeURIComponent(argv.country) +
       "&APPID=62b4ca8c3ab560e2742636ac825805d5&units=metric";
-    getWeather(url);
+    getWeather(url, (error, data) => {
+      console.log("Error", error);
+      console.log("Data", data);
+    });
   },
 });
 
-const getWeather = (url) => {
+const getWeather = (url, callback) => {
   const c_code = argv.country.toUpperCase().slice(0, 2);
   request({ url: url, json: true }, (error, response) => {
     if (error) {
-      console.log("Unable to connect to Weather server");
+      callback("Unable to connect to Weather server");
     } else if (
       response.body.name == undefined ||
       response.body.sys.country !== c_code
     ) {
-      console.log("Unable to Find location");
+      callback("Unable to Find location");
     } else {
       const data = response.body;
       const country = data.sys.country,
