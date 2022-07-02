@@ -39,22 +39,22 @@ yargs.command({
 
 const getWeather = (url, callback) => {
   const c_code = argv.country.toUpperCase().slice(0, 2);
-  request({ url: url, json: true }, (error, response) => {
+  request({ url, json: true }, (error, { body }) => {
+    //uses Es6 Destructuring property
     if (error) {
       callback("Unable to connect to Weather server");
-    } else if (
-      response.body.name == undefined ||
-      response.body.sys.country !== c_code
-    ) {
+    } else if (body.name == undefined || body.sys.country !== c_code) {
       callback("Unable to Find location");
     } else {
-      const data = response.body;
-      const country = data.sys.country,
+      const data = body; //////used Es6 Destructing property
+      const { sys, main, visibility } = data;
+      const { temp, pressure, humidity } = main;
+      const country = sys.country,
         city = data.name,
-        temperature = data.main.temp,
-        pressure = data.main.pressure,
-        humidity = data.main.humidity,
-        visibility = data.visibility;
+        temperature = temp,
+        Pressure = pressure,
+        Humidity = humidity,
+        Visibility = visibility;
       //console.log(data.main);
       console.log(
         "Country: " +
@@ -68,7 +68,7 @@ const getWeather = (url, callback) => {
           "mbar Humidity: " +
           humidity +
           "% Visibility: " +
-          visibility +
+          Visibility +
           "km"
       );
     }
